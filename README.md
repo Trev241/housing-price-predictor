@@ -1,2 +1,3 @@
 # housing-price-predictor
- A model for predicting houses prices.
+
+A model for predicting houses prices.
