@@ -31,3 +31,10 @@ def heatmap(df: pd.DataFrame):
     sns.heatmap(corr)
     plt.title("Heatmap of all features")
     plt.savefig(f"app/static/images/heatmap.png")
+
+
+def histplot(df: pd.DataFrame, column):
+    plt.clf()
+
+    plt.hist(df[column])
+    plt.savefig(f"app/static/images/{column}-hist.png")

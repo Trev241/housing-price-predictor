@@ -3,7 +3,7 @@ import pandas as pd
 from flask import Flask
 from app.predictor import PricePredictor
 from app.utils import impurify
-from app.visualize import lineplot, heatmap
+from app.visualize import lineplot, heatmap, histplot
 
 DATA_FILE_PATH = "app/data/housing-prices.csv"
 CLEANED_DATA_FILE_PATH = "app/data/housing-prices-cleaned.csv"
@@ -51,6 +51,6 @@ predictor.map_values(
     {"unfurnished": 0, "semi-furnished": 1, "furnished": 2, "no": 0, "yes": 1},
 )
 heatmap(predictor.df)
-
+histplot(df, "price")
 
 from app import routes
