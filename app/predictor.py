@@ -63,8 +63,8 @@ class PricePredictor:
         A call to this function will override the instance's existing model.
         """
 
-        X = self.df.drop(columns=[self.target_var])
-        y = self.df[self.target_var]
+        X = self.df.drop(columns=[self.target_var]).values
+        y = self.df[self.target_var].values
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=0.25, random_state=42
         )

@@ -7,14 +7,24 @@
 
   <form method="post" class="row mt-5">
     <div class="mb-3">
-      <label for="areaRange" class="form-label">Size of area</label>
-      <input type="range" class="form-range" name="area" id="areaRange" />
+      <h4 class="mb-3">Use the slider to input the area</h4>
+      <label id="areaRangeLabel" for="areaRange" class="form-label"
+        >Area: 1000</label
+      >
+      <input
+        type="range"
+        min="1000"
+        value="1000"
+        max="20000"
+        class="form-range"
+        name="area"
+        id="areaRange"
+      />
     </div>
 
+    <h4 class="mb-3">Enter how many of each type is present in the house</h4>
     <div class="col-6 mb-3">
-      <label for="numberOfBedrooms" class="form-label"
-        >Number of bedrooms</label
-      >
+      <label for="numberOfBedrooms" class="form-label">Bedrooms</label>
       <input
         type="number"
         class="form-control"
@@ -24,9 +34,7 @@
     </div>
 
     <div class="col-6 mb-3">
-      <label for="numberOfBathrooms" class="form-label"
-        >Number of bathrooms</label
-      >
+      <label for="numberOfBathrooms" class="form-label">Bathrooms</label>
       <input
         type="number"
         class="form-control"
@@ -36,7 +44,7 @@
     </div>
 
     <div class="col mb-3">
-      <label for="numberOfStories" class="form-label">Number of stories</label>
+      <label for="numberOfStories" class="form-label">Stories</label>
       <input
         type="number"
         class="form-control"
@@ -46,9 +54,7 @@
     </div>
 
     <div class="col mb-4">
-      <label for="numberOfParking" class="form-label"
-        >Number of parking spots</label
-      >
+      <label for="numberOfParking" class="form-label">Parking spots</label>
       <input
         type="number"
         class="form-control"
@@ -57,7 +63,7 @@
       />
     </div>
 
-    <h4 class="mb-3">Check the options that apply</h4>
+    <h4 class="mb-3">Check all options that apply</h4>
     <div class="col-4 mb-3 form-check">
       <input
         type="checkbox"
@@ -128,7 +134,7 @@
       <label class="form-check-label" for="prefarea">In a preferred area</label>
     </div>
 
-    <h4>Is the house furnished?</h4>
+    <h4 class="mb-3">Is the house furnished?</h4>
     <select
       name="furnishingstatus"
       class="form-select mb-3"
@@ -144,5 +150,7 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>
+
+  <script src="{{url_for('static', filename='predict.js')}}"></script>
 </div>
 {% endblock %}
