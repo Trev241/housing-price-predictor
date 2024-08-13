@@ -3,6 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
 DATA_FILE_PATH = "data/housing-prices.csv"
 CLEANED_DATA_FILE_PATH = "data/housing-prices-cleaned.csv"
 
@@ -119,3 +123,29 @@ plt.title("Heatmap of all features")
 plt.show()
 
 df.to_csv(CLEANED_DATA_FILE_PATH)
+
+# Create train test split
+X_train, X_test, y_train, y_test = train_test_split(
+    df, df["price"], test_size=0.33, random_state=42
+)
+
+# Linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+print(model.score(X_test, y_test))
+
+y_pred = model.predict(X_test)
+print(y_pred)
+
+# Plot prediction vs original
+plt.scatter(y_pred, y_test)
+plt.show()
+
+# KNN model
+model = KNeighborsRegressor(n_neighbors=3)
+model.fit(X_train, y_train)
+print(model.score(X_test, y_test))
+
+y_pred = model.predict(X_test)
+plt.scatter(y_pred, y_test)
+plt.show()
