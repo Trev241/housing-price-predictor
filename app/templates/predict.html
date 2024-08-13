@@ -1,0 +1,148 @@
+{% extends "base.html" %} {% block content %}
+<div class="container my-5">
+  <h1 class="display-4">Predict the price of a home</h1>
+  <p class="lead">
+    Fill up the form and use our tool to predict the cost of a home
+  </p>
+
+  <form method="post" class="row mt-5">
+    <div class="mb-3">
+      <label for="areaRange" class="form-label">Size of area</label>
+      <input type="range" class="form-range" name="area" id="areaRange" />
+    </div>
+
+    <div class="col-6 mb-3">
+      <label for="numberOfBedrooms" class="form-label"
+        >Number of bedrooms</label
+      >
+      <input
+        type="number"
+        class="form-control"
+        id="numberOfBedrooms"
+        name="bedrooms"
+      />
+    </div>
+
+    <div class="col-6 mb-3">
+      <label for="numberOfBathrooms" class="form-label"
+        >Number of bathrooms</label
+      >
+      <input
+        type="number"
+        class="form-control"
+        name="bathrooms"
+        id="numberOfBathrooms"
+      />
+    </div>
+
+    <div class="col mb-3">
+      <label for="numberOfStories" class="form-label">Number of stories</label>
+      <input
+        type="number"
+        class="form-control"
+        name="stories"
+        id="numberOfStories"
+      />
+    </div>
+
+    <div class="col mb-4">
+      <label for="numberOfParking" class="form-label"
+        >Number of parking spots</label
+      >
+      <input
+        type="number"
+        class="form-control"
+        name="parking"
+        id="numberOfParking"
+      />
+    </div>
+
+    <h4 class="mb-3">Check the options that apply</h4>
+    <div class="col-4 mb-3 form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        name="feature"
+        value="mainroad"
+        id="mainroad"
+      />
+      <label class="form-check-label" for="mainroad">On a main road</label>
+    </div>
+
+    <div class="col-4 mb-3 form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        name="feature"
+        value="guestroom"
+        id="guestroom"
+      />
+      <label class="form-check-label" for="guestroom">Has a guestroom</label>
+    </div>
+
+    <div class="col-4 mb-3 form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        name="feature"
+        value="basement"
+        id="basement"
+      />
+      <label class="form-check-label" for="basement">Has a basement</label>
+    </div>
+
+    <div class="col-4 mb-3 form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        name="feature"
+        value="hotwaterheating"
+        id="hotwaterheating"
+      />
+      <label class="form-check-label" for="hotwaterheating"
+        >Has hot water heating</label
+      >
+    </div>
+
+    <div class="col-4 mb-3 form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        name="feature"
+        value="airconditioning"
+        id="airconditioning"
+      />
+      <label class="form-check-label" for="airconditioning"
+        >Has air conditioning</label
+      >
+    </div>
+
+    <div class="col-4 mb-4 form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        name="feature"
+        value="prefarea"
+        id="prefarea"
+      />
+      <label class="form-check-label" for="prefarea">In a preferred area</label>
+    </div>
+
+    <h4>Is the house furnished?</h4>
+    <select
+      name="furnishingstatus"
+      class="form-select mb-3"
+      aria-label="Default select example"
+    >
+      <option selected disabled>Select an option</option>
+      <option value="0">Unfurnished</option>
+      <option value="1">Semi-furnished</option>
+      <option value="2">Furnished</option>
+    </select>
+
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
