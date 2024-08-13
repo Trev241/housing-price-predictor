@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 from flask import Flask
 from app.predictor import PricePredictor
@@ -15,32 +16,28 @@ app.config.from_mapping(
     SECRET_KEY="dev",
 )
 
+print(os.listdir("app/data/"))
 
-df = pd.read_csv(DATA_FILE_PATH)
-df = impurify(df, ignore_cols=[0])
-predictor = PricePredictor(df, target_var="price")
+if "LinearRegression().pkl" in os.listdir(
+    "app/models/"
+) and "housing-prices-cleaned.csv" in os.listdir("app/data/"):
+    df = pd.read_csv(CLEANED_DATA_FILE_PATH)
+    predictor = PricePredictor(
+        df, target_var="price", existing_model="LinearRegression()"
+    )
 
-# Use median to fill missing values
-columns = ["bedrooms", "bathrooms", "stories", "parking"]
-predictor.sanitize(columns, PricePredictor.USE_MEDIAN)
-# Use mean to fill missing values
-predictor.sanitize(["area"], PricePredictor.USE_MEAN)
-columns = [
-    "mainroad",
-    "guestroom",
-    "basement",
-    "hotwaterheating",
-    "airconditioning",
-    "prefarea",
-    "furnishingstatus",
-]
-# Use mode to fill missing values
-predictor.sanitize(columns, PricePredictor.USE_MODE)
+    print("Loaded models and data successfully!")
+else:
+    df = pd.read_csv(DATA_FILE_PATH)
+    df = impurify(df, ignore_cols=[0])
+    predictor = PricePredictor(df, target_var="price")
 
-# Create charts
-lineplot(df, "area", "price")
-predictor.map_values(
-    [
+    # Use median to fill missing values
+    columns = ["bedrooms", "bathrooms", "stories", "parking"]
+    predictor.sanitize(columns, PricePredictor.USE_MEDIAN)
+    # Use mean to fill missing values
+    predictor.sanitize(["area"], PricePredictor.USE_MEAN)
+    columns = [
         "mainroad",
         "guestroom",
         "basement",
@@ -48,12 +45,32 @@ predictor.map_values(
         "airconditioning",
         "prefarea",
         "furnishingstatus",
-    ],
-    {"unfurnished": 0, "semi-furnished": 1, "furnished": 2, "no": 0, "yes": 1},
-)
-heatmap(predictor.df)
-histplot(df, "price")
+    ]
+    # Use mode to fill missing values
+    predictor.sanitize(columns, PricePredictor.USE_MODE)
 
-predictor.initialize(LinearRegression())
+    # Create charts
+    predictor.map_values(
+        [
+            "mainroad",
+            "guestroom",
+            "basement",
+            "hotwaterheating",
+            "airconditioning",
+            "prefarea",
+            "furnishingstatus",
+        ],
+        {"unfurnished": 0, "semi-furnished": 1, "furnished": 2, "no": 0, "yes": 1},
+    )
+
+    predictor.initialize(LinearRegression())
+    predictor.save()
+
+    predictor.df.to_csv(CLEANED_DATA_FILE_PATH)
+
+if len(os.listdir("app/static/images")) != 4:
+    lineplot(df, "area", "price")
+    heatmap(predictor.df)
+    histplot(df, "price")
 
 from app import routes
