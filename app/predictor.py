@@ -1,6 +1,5 @@
-import pandas as pd
 import pickle
-import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
@@ -8,6 +7,10 @@ from pathlib import Path
 
 
 class PricePredictor:
+    USE_MODE = "Mode"
+    USE_MEAN = "Mean"
+    USE_MEDIAN = "Median"
+
     def __init__(self, df: pd.DataFrame, target_var: str, existing_model=None) -> None:
         """
         Creates an instance of the predictor.
@@ -20,16 +23,39 @@ class PricePredictor:
         self.df = df
         self.target_var = target_var
 
-        Path("images/").mkdir(parents=True, exist_ok=True)
-        Path("models/").mkdir(parents=True, exist_ok=True)
+        Path("app/static/images/").mkdir(parents=True, exist_ok=True)
+        Path("app/models/").mkdir(parents=True, exist_ok=True)
 
         if existing_model:
             try:
-                f = open(f"models/{existing_model}.pkl", "rb")
+                f = open(f"app/models/{existing_model}.pkl", "rb")
                 self.model = pickle.load(f)
                 f.close()
             except:
-                raise Exception("Could not load model. Creating a new one.")
+                raise Exception("Could not load model.")
+
+    def sanitize(self, columns, using):
+        """
+        Sanitizes the dataframe by populating the missing values of select columns
+
+        :param columns: Columns to be sanitized
+        :param using: The method by which the column should be sanitized
+        """
+
+        for column in columns:
+            if using == PricePredictor.USE_MODE:
+                val = self.df[column].mode()[0]
+            elif using == PricePredictor.USE_MEDIAN:
+                val = round(self.df[column].mean())
+            else:
+                val = self.df[column].median()
+
+            print(f"{using} for {column} is {val}")
+            self.df[column] = self.df[column].fillna(val)
+
+    def map_values(self, columns, map):
+        for column in columns:
+            self.df[column] = self.df[column].map(map)
 
     def initialize(self, model):
         """
@@ -52,14 +78,14 @@ class PricePredictor:
         # Create line of best fit
         y_max = max(y_test)
         plt.plot([0, y_max], [0, y_max], ls="--")
-        plt.savefig(f"images/{str(model)}-scatter-accuracy.png")
+        plt.savefig(f"app/static/images/{str(model)}-scatter-accuracy.png")
 
         self.model = model
 
     def save(self):
         """Saves the model to disk"""
 
-        f = open(f"models/{str(self.model)}.pkl", "wb")
+        f = open(f"app/models/{str(self.model)}.pkl", "wb")
         pickle.dump(self.model, f)
 
     def predict(self, X_input):

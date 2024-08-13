@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block content %}
+<div class="container-fluid">
+  <div
+    class="d-flex flex-column min-vh-100 align-items-center justify-content-center"
+  >
+    <h1 class="display-1">Analyzing housing prices</h1>
+    <h2 class="display-4 lead">Continue scrolling to learn more</h2>
+  </div>
+
+  <div class="container">
+    <div class="d-flex flex-column align-items-center text-center my-5">
+      <div>
+        <h3 class="display-4">Larger plots are usually more expensive</h3>
+        <p class="lead">
+          Yet the most expensive plot in our study wasn't necessarily the
+          largest.
+        </p>
+      </div>
+      <img src="static/images/area-price-lineplot.png" />
+    </div>
+
+    <div class="d-flex flex-column align-items-center text-center my-5">
+      <div>
+        <h3 class="display-4">Land size and the number of bathrooms</h3>
+        <p class="lead">
+          Turned out to be very influential factors in determining the price of
+          a home.
+        </p>
+      </div>
+      <img src="static/images/heatmap.png" />
+    </div>
+  </div>
+</div>
+{% endblock %}
