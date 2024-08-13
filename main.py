@@ -6,6 +6,7 @@ import seaborn as sns
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
+from model import PricePredictor
 
 DATA_FILE_PATH = "data/housing-prices.csv"
 CLEANED_DATA_FILE_PATH = "data/housing-prices-cleaned.csv"
@@ -126,26 +127,21 @@ df.to_csv(CLEANED_DATA_FILE_PATH)
 
 # Create train test split
 X_train, X_test, y_train, y_test = train_test_split(
-    df, df["price"], test_size=0.33, random_state=42
+    df.drop(columns=["price"]), df["price"], test_size=0.33, random_state=42
 )
 
 # Linear regression model
-model = LinearRegression()
-model.fit(X_train, y_train)
-print(model.score(X_test, y_test))
+# model = LinearRegression()
+# model.fit(X_train, y_train)
+# print(model.score(X_test, y_test))
 
-y_pred = model.predict(X_test)
-print(y_pred)
+# y_pred = model.predict(X_test)
 
-# Plot prediction vs original
-plt.scatter(y_pred, y_test)
-plt.show()
+predictor = PricePredictor(df, "price")
+predictor.initialize(LinearRegression())
+y_pred = predictor.predict(X_test)
 
 # KNN model
-model = KNeighborsRegressor(n_neighbors=3)
-model.fit(X_train, y_train)
-print(model.score(X_test, y_test))
-
-y_pred = model.predict(X_test)
-plt.scatter(y_pred, y_test)
-plt.show()
+# model = KNeighborsRegressor(n_neighbors=3)
+# model.fit(X_train, y_train)
+# print(model.score(X_test, y_test))
