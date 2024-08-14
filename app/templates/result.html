@@ -1,6 +1,34 @@
 {% extends "base.html" %} {% block content %}
 <div class="container my-5">
-  <h1 class="display-3">${{ predicted_price }}</h1>
-  <p class="lead">This is the model's estimate of the house's worth</p>
+  <div class="mb-5">
+    <h1 class="display-6">The house's price is</h1>
+    <h2 class="display-2">${{ predicted_price }}</h2>
+  </div>
+
+  <div>
+    <h2>Behind the numbers</h2>
+    <p class="lead">
+      Our model uses linear regression to predict the price of a home.
+    </p>
+
+    <p>
+      The features chosen for training include the number of different kinds of
+      rooms, the size of the home, the presence of amenities and how furnished
+      it is at the time of sale. The prediction made is approximately
+      <b>61%</b> accurate.
+    </p>
+
+    <div class="d-flex justify-content-center">
+      <img
+        class="img-fluid mb-3"
+        src="static/images/LinearRegression()-scatter-accuracy.png"
+      />
+    </div>
+
+    <p>
+      The scatter diagram above is a good illustration of the model's accuracy.
+      The dotted line represents pin-point accuracy.
+    </p>
+  </div>
 </div>
 {% endblock %}
