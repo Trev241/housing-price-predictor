@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 
 def lineplot(df: pd.DataFrame, x_prop: str, y_prop: str):
@@ -38,3 +39,13 @@ def histplot(df: pd.DataFrame, column):
 
     plt.hist(df[column])
     plt.savefig(f"app/static/images/{column}-hist.png")
+
+
+def pie(df: pd.DataFrame, column):
+    plt.clf()
+
+    plt.title("Distribution of houses by the number of bedrooms")
+    value_counts = df[column].value_counts().sort_values()
+    patches, _ = plt.pie(value_counts)
+    plt.legend(patches, labels=value_counts.keys(), loc="best")
+    plt.savefig(f"app/static/images/{column}-pie.png")

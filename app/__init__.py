@@ -4,7 +4,7 @@ import os
 from flask import Flask
 from app.predictor import PricePredictor
 from app.utils import impurify
-from app.visualize import lineplot, heatmap, histplot
+from app.visualize import lineplot, heatmap, histplot, pie
 from sklearn.linear_model import LinearRegression
 
 DATA_FILE_PATH = "app/data/housing-prices.csv"
@@ -66,11 +66,12 @@ else:
     predictor.initialize(LinearRegression())
     predictor.save()
 
-    predictor.df.to_csv(CLEANED_DATA_FILE_PATH)
+    predictor.df.to_csv(CLEANED_DATA_FILE_PATH, index=False)
 
-if len(os.listdir("app/static/images")) != 4:
+if len(os.listdir("app/static/images")) != 5:
     lineplot(df, "area", "price")
     heatmap(predictor.df)
     histplot(df, "price")
+    pie(df, "bedrooms")
 
 from app import routes
