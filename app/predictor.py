@@ -78,6 +78,9 @@ class PricePredictor:
         # Create line of best fit
         y_max = max(y_test)
         plt.plot([0, y_max], [0, y_max], ls="--")
+        plt.title("Model accuracy")
+        plt.xlabel("Predicted")
+        plt.ylabel("Actual")
         plt.savefig(f"app/static/images/{str(model)}-scatter-accuracy.png")
 
         self.model = model

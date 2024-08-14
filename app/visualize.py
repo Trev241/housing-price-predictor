@@ -20,7 +20,7 @@ def lineplot(df: pd.DataFrame, x_prop: str, y_prop: str):
         ls="--",
     )
     plt.xlabel(x_prop.capitalize())
-    plt.ylabel(x_prop.capitalize())
+    plt.ylabel(y_prop.capitalize())
 
     plt.savefig(f"app/static/images/{x_prop}-{y_prop}-lineplot.png")
 
@@ -38,6 +38,9 @@ def histplot(df: pd.DataFrame, column):
     plt.clf()
 
     plt.hist(df[column])
+    plt.title(f"Distribution of {column}")
+    plt.xlabel(column.capitalize())
+    plt.ylabel("Frequency")
     plt.savefig(f"app/static/images/{column}-hist.png")
 
 
